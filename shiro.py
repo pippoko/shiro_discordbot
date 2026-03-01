@@ -1,7 +1,5 @@
 import discord
 import os
-from keep import keep_alive
-
 
 class Shiro(discord.Client):
 
@@ -25,12 +23,9 @@ intents.message_content = True
 
 client = Shiro(intents=intents)
 
-keep_alive()
-try:
-    client.run(os.environ['DISCORD_BOT_TOKEN'])
-except:
-    os.system("kill")
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-
-async def setup_hook(self):
-    await self.load_extension("word_button")
+if TOKEN is None:
+    print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
+else:
+    client.run(TOKEN)
