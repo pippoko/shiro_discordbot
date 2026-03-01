@@ -1,9 +1,10 @@
 import discord
 import os
-from dotenv import load_dotenv
-load_dotenv()
+from keep import keep_alive
+
 
 class Shiro(discord.Client):
+
     async def on_ready(self):
         print(f"ログインしました：{self.user}")
 
@@ -15,8 +16,21 @@ class Shiro(discord.Client):
         if message.content.startswith('!hello'):
             await message.channel.send('こんにちは！')
 
+    async def setup_hook(self):
+        await self.load_extension("word_button")
+
+
 intents = discord.Intents.default()
 intents.message_content = True
 
 client = Shiro(intents=intents)
-client.run(os.getenv('DISCORD_BOT_TOKEN'))
+
+keep_alive()
+try:
+    client.run(os.environ['DISCORD_BOT_TOKEN'])
+except:
+    os.system("kill")
+
+
+async def setup_hook(self):
+    await self.load_extension("word_button")
