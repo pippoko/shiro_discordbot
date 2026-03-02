@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import os
+import asyncio
+import datetime
 
 class Shiro(commands.Bot):
     async def on_ready(self):
@@ -18,10 +20,23 @@ class Shiro(commands.Bot):
 
     async def setup_hook(self):
         await self.load_extension("word_button")
+        self.loop.create_task(sleep_cheacker(self))
 
 
 intents = discord.Intents.default()
 intents.message_content = True
+
+async def sleep_cheacker(bot):
+    await bot.wait_until_ready()
+    while not bot.is_closed():
+        now = datetime.datetime.now().time()
+
+        if datetime.time(1, 0) <= now <= datetime.time(9, 0):
+            print("深夜・早朝帯のためBotを停止します")
+            await bot.close()
+            break
+
+        await asyncio.sleep(60)
 
 client = Shiro(command_prefix="!", intents=intents)
 
@@ -31,6 +46,7 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
 
 
 
