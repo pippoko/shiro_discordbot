@@ -13,7 +13,7 @@ class Shiro(commands.Bot):
         if message.content.startswith('!hello'):
             await message.channel.send('こんにちは！')
 
-    await self.process_commands(message)
+        await self.process_commands(message)
 
     async def setup_hook(self):
         await self.load_extension("word_button")
@@ -30,4 +30,5 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
 
