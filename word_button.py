@@ -24,9 +24,9 @@ class WordButtonView(discord.ui.View):
         }
 
         season_words = {
-            "winter": ["餅", "墨汁", "雪", "オーロラ"]
-            "spring": ["卒業", "桜", "チューリップ"]
-            "summer": ["アジサイ", "傘", "波"]
+            "winter": ["餅", "墨汁", "雪", "オーロラ"],
+            "spring": ["卒業", "桜", "チューリップ"],
+            "summer": ["アジサイ", "傘", "波"],
             "autumn": ["紅葉"]
         }
 
