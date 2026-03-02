@@ -16,31 +16,30 @@ class WordButtonView(discord.ui.View):
             "背中", "横顔", "ハグ", "髪を耳にかける", "ストッキング", "プリーツスカート"
         ]
 
-        limited_words = {
-            1: ["餅", "墨汁"],
-            2: ["バレンタイン"],
-            3: ["卒業"],
-            4: ["桜"],
-            5: ["こいのぼり"],
-            6: ["アジサイ", "傘"],
-            7: ["日差し"],
-            8: [],
-            9: [],
-            10: [],
-            11: [],
-            12: []
+        month_to_season = {
+            12: "winter", 1:"winter", 2:"winter",
+            3: "spring", 4:"spring", 5:"spring",
+            6:"summer", 7:"summer", 8:"summer",
+            9:"autumn", 10:"autumn", 11:"autumn"
+        }
+
+        season_words = {
+            "winter": ["餅", "墨汁", "雪", "オーロラ"]
+            "spring": ["卒業", "桜", "チューリップ"]
+            "summer": ["アジサイ", "傘", "波"]
+            "autumn": ["紅葉"]
         }
 
         now_month = datetime.datetime.now().month
+        current_season = month_to_season[now_month]
 
         words = fixed_words.copy()
-        if now_month in limited_words:
-            words.extend(limited_words[now_month])
+        words.extend(season_words.get(current_season, []))
 
         chosen = random.choice(words)
 
         await interaction.response.send_message(
-            f"{interaction.user.mention} あなたへのお題は **{chosen}** です！\n"
+            f"{interaction.user.mention} あなたへのお題は **『 {chosen} 』** です！\n"
             "資料をたっぷり見て描いて、できたら https://discord.com/channels/1292757949608886353/1293199504459436134 にあげてみてね！",
             ephemeral=True
         )
