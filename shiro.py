@@ -29,9 +29,9 @@ intents.message_content = True
 async def sleep_cheacker(bot):
     await bot.wait_until_ready()
     while not bot.is_closed():
-        now = datetime.datetime.now().time()
+        now_utc = datetime.datetime.utcnow().time()
 
-        if datetime.time(1, 0) <= now <= datetime.time(9, 0):
+        if datetime.time(17, 0) <= now_utc or now_utc < datetime.time(0, 0):
             print("深夜・早朝帯のためBotを停止します")
             await bot.close()
             break
@@ -46,6 +46,7 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
 
 
 
