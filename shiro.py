@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands
 import os
 
 class Shiro(commands.Bot):
@@ -30,5 +31,6 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
 
 
