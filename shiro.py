@@ -1,8 +1,7 @@
 import discord
 import os
 
-class Shiro(discord.Client):
-
+class Shiro(commands.Bot):
     async def on_ready(self):
         print(f"ログインしました：{self.user}")
 
@@ -14,6 +13,8 @@ class Shiro(discord.Client):
         if message.content.startswith('!hello'):
             await message.channel.send('こんにちは！')
 
+    await self.process_commands(message)
+
     async def setup_hook(self):
         await self.load_extension("word_button")
 
@@ -21,7 +22,7 @@ class Shiro(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = Shiro(intents=intents)
+client = Shiro(command_prefix="!", intents=intents)
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
@@ -29,3 +30,4 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
