@@ -4,6 +4,27 @@ import os
 import asyncio
 import datetime
 
+async def sleep_checker(bot):
+    await bot.wait_until_ready()
+    while not bot.is_closed():
+        now_utc = datetime.datetime.utcnow().time()
+
+        if datetime.time(17, 0) <= now_utc or now_utc < datetime.time(0, 0):
+            print("深夜・早朝帯のためBotを停止します")
+            try:
+                with open("button_message.txt", "r") as f:
+                    msg_id = int(f.read().strip())
+                channel = bot.get_channel(1477907626342875298)
+                msg = await channel.fetch_message(msg_id)
+                await msg.delete()
+            except Exception as e:
+                print("削除に失敗：", e)
+            
+            await bot.close()
+            break
+
+        await asyncio.sleep(60)
+
 class Shiro(commands.Bot):
     async def on_ready(self):
         print(f"ログインしました：{self.user}")
@@ -37,27 +58,6 @@ class Shiro(commands.Bot):
 
 intents = discord.Intents.default()
 intents.message_content = True
-
-async def sleep_cheacker(bot):
-    await bot.wait_until_ready()
-    while not bot.is_closed():
-        now_utc = datetime.datetime.utcnow().time()
-
-        if datetime.time(17, 0) <= now_utc or now_utc < datetime.time(0, 0):
-            print("深夜・早朝帯のためBotを停止します")
-            try:
-                with open("button_message.txt", "r") as f:
-                    msg_id = int(f.read().strip())
-                channel = bot.get_channel(1477907626342875298)
-                msg = await channel.fetch_message(meg_id)
-                await msg.delete()
-            except Exception as e:
-                print("削除に失敗：", e)
-            
-            await bot.close()
-            break
-
-        await asyncio.sleep(60)
 
 client = Shiro(command_prefix="!", intents=intents)
 
