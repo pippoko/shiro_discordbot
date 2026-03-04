@@ -32,7 +32,7 @@ class Shiro(commands.Bot):
         await self.load_extension("word_button")
         from word_button import WordButtonView
         self.add_view(WordButtonView())
-        self.loop.create_task(sleep_cheacker(self))
+        self.loop.create_task(sleep_checker(self))
 
 
 intents = discord.Intents.default()
@@ -67,6 +67,7 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
 
 
 
