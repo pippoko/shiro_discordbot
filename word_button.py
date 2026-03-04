@@ -71,7 +71,7 @@ class WordButtonView(discord.ui.View):
         for category_list in fixed_categories.values():
             fixed_words.extend(category_list)
 
-        word = fixed_words + season_words.get(current_season, [])
+        words = fixed_words + season_words.get(current_season, [])
 
         chosen = random.choice(words)
 
