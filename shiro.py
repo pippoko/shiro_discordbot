@@ -30,6 +30,8 @@ class Shiro(commands.Bot):
 
     async def setup_hook(self):
         await self.load_extension("word_button")
+        from word_button import WordButtonView
+        self.add_view(WordButtonView())
         self.loop.create_task(sleep_cheacker(self))
 
 
@@ -65,6 +67,7 @@ if TOKEN is None:
     print("✖ トークンが読み込めませんでした。RailwayのVariablesを確認してください。")
 else:
     client.run(TOKEN)
+
 
 
 
